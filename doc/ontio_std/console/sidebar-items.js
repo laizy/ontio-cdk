@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["debug","Used to print the debug information in the contract, which can be seen in the log of the ontology node # Example `no_run # use ontio_std::console; console::debug(\"test\"); `"]]});

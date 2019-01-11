@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["neo",""],["ong","This module provides the operation API related to ong assets, such as balanceof, transfer, etc."],["ont","This module provides the operation API related to ont assets, such as balanceof, transfer, etc."],["ontid",""],["wasm",""]],"struct":[["TransferParam","Used when a transaction contains transfers between multiple addresses."]]});

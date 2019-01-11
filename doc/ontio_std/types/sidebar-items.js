@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["H160","A byte array of length 20 representing the Address."],["H256","A byte array of length 32 representing the block hash, etc."]],"type":[["Address","Byte array of length 20"],["I128",""],["U128","Byte array of length 16"]]});

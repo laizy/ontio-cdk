@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["ontio_std"] = [{"text":"impl&lt;T:&nbsp;<a class=\"trait\" href=\"ontio_std/abi/trait.Encoder.html\" title=\"trait ontio_std::abi::Encoder\">Encoder</a>&gt; <a class=\"trait\" href=\"ontio_std/prelude/trait.Drop.html\" title=\"trait ontio_std::prelude::Drop\">Drop</a> for <a class=\"struct\" href=\"ontio_std/database/struct.ListStore.html\" title=\"struct ontio_std::database::ListStore\">ListStore</a>&lt;T&gt;","synthetic":false,"types":["ontio_std::database::list::ListStore"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
