@@ -2,10 +2,10 @@ use super::Error;
 use super::{Decoder2, Encoder};
 use super::{Sink, Source};
 
+use crate::abi::{Decoder, ZeroCopySource};
 use crate::cmp;
-use crate::types::{Address, Addr, H256, U256, Hash};
+use crate::types::{Addr, Address, Hash, H256, U256};
 use crate::{String, Vec};
-use crate::abi::{ZeroCopySource, Decoder};
 
 impl Decoder for u8 {
     fn decode(source: &mut Source) -> Result<Self, Error> {

@@ -47,8 +47,8 @@ pub use alloc::{format, vec};
 pub mod prelude {
     pub use crate::types::{Address, H256, U256};
     pub use alloc::prelude::*;
-    pub use alloc::string::{ToString,String};
     pub use alloc::slice::SliceConcatExt;
+    pub use alloc::string::{String, ToString};
     pub use alloc::vec::Vec;
     pub use alloc::{format, vec};
     pub use core::prelude::v1::*;
