@@ -2,9 +2,9 @@
 extern crate ontio_std as ostd;
 
 use ostd::abi::{Encoder, Sink, ZeroCopySource};
+use ostd::string::ToString;
 use ostd::types::{Addr, U256};
 use ostd::{database, runtime};
-use ostd::{string::ToString};
 
 const KEY_TOTAL_SUPPLY: &'static str = "total_supply";
 const NAME: &'static str = "wasm_token";
@@ -46,7 +46,7 @@ fn total_supply() -> U256 {
 pub fn invoke() {
     let input = runtime::input();
     let mut source = ZeroCopySource::new(&input);
-    let action:&[u8] = source.read().unwrap();
+    let action: &[u8] = source.read().unwrap();
     let mut sink = Sink::new(12);
     match action {
         b"init" => sink.write(initialize()),

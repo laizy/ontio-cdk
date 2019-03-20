@@ -88,7 +88,7 @@ impl DerefMut for Hash {
 }
 
 pub struct Addr {
-    pub inner: [u8],
+    pub inner: [u8]
 }
 
 impl Addr {
