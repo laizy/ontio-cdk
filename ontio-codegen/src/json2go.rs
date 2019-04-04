@@ -1,31 +1,31 @@
 use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::io::prelude::*;
+use std::io::BufWriter;
 use std::path::Path;
 use std::str;
-use std::io::BufWriter;
 
 #[derive(Serialize, Deserialize)]
 pub(crate) struct Abi {
     #[serde(rename = "CompilerVersion")]
     compiler_version: String,
-    hash:String,
+    hash: String,
     #[serde(rename = "entrypoint")]
-    entry_point:String,
-    functions:Vec<Function>,
+    entry_point: String,
+    functions: Vec<Function>,
 }
 
 #[derive(Serialize, Deserialize)]
 pub(crate) struct Function {
-    name:String,
-    parameters:Vec<Parameters>,
+    name: String,
+    parameters: Vec<Parameters>,
 }
 
 #[derive(Serialize, Deserialize)]
 pub(crate) struct Parameters {
-    name:String,
+    name: String,
     #[serde(rename = "type")]
-    p_type:String,
+    p_type: String,
 }
 
 pub(crate) fn parse_json_to_go(file_path: String) {
@@ -34,14 +34,15 @@ pub(crate) fn parse_json_to_go(file_path: String) {
     generate_go_file(struct_name, abi);
 }
 
-pub(crate) fn generate_go_file(go_struct_name:String, abi: Abi) -> std::io::Result<()> {
+pub(crate) fn generate_go_file(go_struct_name: String, abi: Abi) -> std::io::Result<()> {
     let buf = include_str!("template.go");
     let buf_new = buf.replace("DemoContract", &go_struct_name);
-    let file_new = File::create(format!("{}{}",go_struct_name, ".go".to_string())).unwrap();
+    let file_new = File::create(format!("{}{}", go_struct_name, ".go".to_string())).unwrap();
     let mut f_out = BufWriter::new(file_new);
     f_out.write(buf_new.as_bytes())?;
     f_out.write("\n".as_bytes())?;
-    let function_str = "func (this *DemoContract) FunctionName(parameters) (*types.MutableTransaction, error) {
+    let function_str =
+        "func (this *DemoContract) FunctionName(parameters) (*types.MutableTransaction, error) {
 	bs, err := this.buildParams(\"function_name\", []interface{}{parameter_name})
 	if err != nil {
 		return nil, fmt.Errorf(\"buildparams failed:s%\", err)
@@ -50,8 +51,8 @@ pub(crate) fn generate_go_file(go_struct_name:String, abi: Abi) -> std::io::Resu
 	return tx, nil
 }";
     for func in abi.functions {
-        let mut function_str_new = function_str
-            .replace("FunctionName", &first_char_to_upper(func.name.clone()));
+        let mut function_str_new =
+            function_str.replace("FunctionName", &first_char_to_upper(func.name.clone()));
         let params = build_params(func.parameters);
         function_str_new = function_str_new
             .replace("parameters", &params.0)
@@ -63,7 +64,7 @@ pub(crate) fn generate_go_file(go_struct_name:String, abi: Abi) -> std::io::Resu
     f_out.flush()
 }
 
-fn build_params(params:Vec<Parameters>) -> (String, String) {
+fn build_params(params: Vec<Parameters>) -> (String, String) {
     let mut res = String::new();
     let mut param_names = String::new();
     for param in params {
@@ -103,15 +104,15 @@ fn build_params(params:Vec<Parameters>) -> (String, String) {
     (res, param_names)
 }
 pub fn generate_go_struct_name(file_path: String) -> String {
-    let v:Vec<&str> = file_path.split(|c|c=='/' || c=='.').collect();
+    let v: Vec<&str> = file_path.split(|c| c == '/' || c == '.').collect();
     if v.len() < 2 {
         panic!("file path is wrong:{}", file_path);
     }
-    let file_name = v[v.len()-2];
+    let file_name = v[v.len() - 2];
     let res = first_char_to_upper(file_name.to_string());
     format!("{}{}", res, "Contract")
 }
-pub fn first_char_to_upper(temp:String) ->String {
+pub fn first_char_to_upper(temp: String) -> String {
     let t_upper = temp.to_uppercase();
     let mut t_string = temp.to_string();
     let mut t_bs;
@@ -130,7 +131,7 @@ fn read_file(file_path: &str) -> Abi {
         Ok(mut f) => {
             let mut buf = String::new();
             f.read_to_string(&mut buf).expect("something went wrong reading the file");
-            let abi:Abi = serde_json::from_str(&buf).unwrap();
+            let abi: Abi = serde_json::from_str(&buf).unwrap();
             abi
         }
         Err(e) => {
