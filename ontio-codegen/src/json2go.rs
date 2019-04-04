@@ -40,6 +40,7 @@ pub(crate) fn generate_go_file(go_struct_name:String, abi: Abi) -> std::io::Resu
     let file_new = File::create(format!("{}{}",go_struct_name, ".go".to_string())).unwrap();
     let mut f_out = BufWriter::new(file_new);
     f_out.write(buf_new.as_bytes())?;
+    f_out.write("\n".as_bytes())?;
     let function_str = "func (this *DemoContract) FunctionName(parameters) (*types.MutableTransaction, error) {
 	bs, err := this.buildParams(\"function_name\", []interface{}{parameter_name})
 	if err != nil {
