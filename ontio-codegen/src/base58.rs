@@ -1,7 +1,7 @@
-use num::bigint::{BigUint, ToBigUint};
-use num::integer::Integer;
-use num::traits::cast::ToPrimitive;
-use num::traits::Zero;
+use num_bigint::{BigUint, ToBigUint};
+use num_integer::Integer;
+use num_traits::cast::ToPrimitive;
+use num_traits::Zero;
 use sha2::{Digest, Sha256};
 
 pub fn dhash256<D: AsRef<[u8]>>(data: D) -> [u8; 32] {
@@ -43,7 +43,7 @@ pub fn decode_base58(val: &str) -> Result<[u8; 20], String> {
     let temp = val.as_bytes().to_vec();
     let new_val = String::from_utf8(temp).unwrap();
     let b58 = BigUint::from(58u32);
-    let mut bigint: BigUint = Zero::zero();
+    let mut bigint = BigUint::default();
     for c in new_val.chars() {
         match CHARS.find(c) {
             None => return Err(format!("invalid char: {}", c)),
