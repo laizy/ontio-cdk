@@ -51,6 +51,7 @@ fn to_hex_string(data: &[u8]) -> String {
 pub type Address = H160;
 
 pub type U128 = u128;
+pub type S128 = i128;
 
 pub use bigint::U256;
 

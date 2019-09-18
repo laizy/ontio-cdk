@@ -9,6 +9,7 @@ members = [
     "examples/token-codegen",
     "examples/oep5token",
     "examples/oep8token",
+    "examples/balance-test",
     "examples/apitest",
     "examples/helloworld",
     "examples/red-envlope"

@@ -143,8 +143,7 @@ impl ApiTest for ApiTestInstance {
         }
     }
     fn call_ont_transfer(&self, from: &Address, to: &Address, amount: U128) -> bool {
-        let state = ont::State { from: from.clone(), to: to.clone(), amount: amount };
-        ont::transfer(&[state])
+        ont::transfer(&from, &to, amount)
     }
     fn call_ont_approve(&self, from: &Address, to: &Address, amount: U128) -> bool {
         ont::approve(from, to, amount)

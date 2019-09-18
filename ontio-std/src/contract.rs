@@ -9,7 +9,12 @@ pub mod ont {
         pub amount: U128,
     }
 
-    pub fn transfer(transfer: &[State]) -> bool {
+    pub fn transfer(from: &Address, to: &Address, val: U128) -> bool {
+        let state = ont::State { from: from.clone(), to: to.clone(), amount: val };
+        super::util::transfer_inner(&ONT_CONTRACT_ADDRESS, &state)
+    }
+
+    pub fn transfer_multi(transfer: &[State]) -> bool {
         super::util::transfer_inner(&ONT_CONTRACT_ADDRESS, transfer)
     }
 
@@ -34,9 +39,16 @@ pub mod ong {
     use super::super::base58;
     use super::super::types::{Address, U128};
     const ONG_CONTRACT_ADDRESS: Address = base58!("AFmseVrdL9f9oyCzZefL9tG6UbvhfRZMHJ");
-    pub fn transfer(transfer: &[super::ont::State]) -> bool {
+
+    pub fn transfer(from: &Address, to: &Address, val: U128) -> bool {
+        let state = ont::State { from: from.clone(), to: to.clone(), amount: val };
+        super::util::transfer_inner(&ONG_CONTRACT_ADDRESS, &state)
+    }
+
+    pub fn transfer_multi(transfer: &[super::ont::State]) -> bool {
         super::util::transfer_inner(&ONG_CONTRACT_ADDRESS, transfer)
     }
+
     pub fn balance_of(address: &Address) -> U128 {
         super::util::balance_of_inner(&ONG_CONTRACT_ADDRESS, &address)
     }

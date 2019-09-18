@@ -48,14 +48,12 @@ fn create_red_envlope(owner: Address, pack_count: u64, amount: u64, token_addr: 
     let re_key = [RE_PREFIX.as_bytes(), hash_bytes].concat();
     let self_addr = runtime::address();
     if is_ont_address(&token_addr) {
-        let state = ont::State { from: owner.clone(), to: self_addr, amount: amount as u128 };
-        let res = ont::transfer(&[state]);
+        let res = ont::transfer(&owner, &self_addr, amount as u128);
         if !res {
             return false;
         }
     } else if is_ong_address(&token_addr) {
-        let state = ont::State { from: owner.clone(), to: self_addr, amount: amount as u128 };
-        let res = ong::transfer(&[state]);
+        let res = ong::transfer(&owner, &self_addr, amount as u128);
         if !res {
             return false;
         }
@@ -142,13 +140,9 @@ fn claim_envlope(account: Address, hash: &str) -> bool {
     est.records.push(record);
     let self_addr = runtime::address();
     if is_ont_address(&est.token_addr) {
-        let state =
-            ont::State { from: self_addr, to: account.clone(), amount: claim_amount as u128 };
-        return ont::transfer(&[state]);
+        return ont::transfer(&self_addr, &account, claim_amount as u128);
     } else if is_ong_address(&est.token_addr) {
-        let state =
-            ont::State { from: self_addr, to: account.clone(), amount: claim_amount as U128 };
-        return ong::transfer(&[state]);
+        return ong::transfer(&self_addr, &account, claim_amount as u128);
     } else {
         let mut sink = Sink::new(16);
         sink.write(("transfer", self_addr, account, claim_amount));

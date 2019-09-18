@@ -2,6 +2,7 @@ mod codec;
 mod sink;
 mod source;
 mod zero_copy_source;
+mod native_codec;
 
 pub use self::sink::Sink;
 pub use self::source::Source;
