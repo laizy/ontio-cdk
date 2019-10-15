@@ -5,8 +5,8 @@ use ostd::abi::{Sink, Source};
 use ostd::prelude::*;
 use ostd::runtime;
 
-fn say_hello() -> String {
-    return "hello world".to_string();
+fn say_hello() -> &'static str {
+    return "hello world";
 }
 
 #[no_mangle]

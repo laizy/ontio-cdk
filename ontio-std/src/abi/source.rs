@@ -1,6 +1,7 @@
+use core::convert::TryInto;
+
 use super::Decoder;
 use super::Error;
-use byteorder::{ByteOrder, LittleEndian};
 
 use crate::types::{Address, H256};
 
@@ -98,19 +99,19 @@ impl<'a> Source<'a> {
     }
 
     pub fn read_u16(&mut self) -> Result<u16, Error> {
-        Ok(LittleEndian::read_u16(self.next_bytes(2)?))
+		Ok(u16::from_le_bytes(self.next_bytes(2)?.try_into().unwrap()))
     }
 
     pub fn read_u32(&mut self) -> Result<u32, Error> {
-        Ok(LittleEndian::read_u32(self.next_bytes(4)?))
+		Ok(u32::from_le_bytes(self.next_bytes(4)?.try_into().unwrap()))
     }
 
     pub fn read_u64(&mut self) -> Result<u64, Error> {
-        Ok(LittleEndian::read_u64(self.next_bytes(8)?))
+		Ok(u64::from_le_bytes(self.next_bytes(8)?.try_into().unwrap()))
     }
 
     pub fn read_u128(&mut self) -> Result<u128, Error> {
-        Ok(LittleEndian::read_u128(self.next_bytes(16)?))
+		Ok(u128::from_le_bytes(self.next_bytes(16)?.try_into().unwrap()))
     }
 
     pub fn read_varuint(&mut self) -> Result<u64, Error> {

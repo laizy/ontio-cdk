@@ -1,7 +1,5 @@
 use super::Encoder;
 use crate::prelude::*;
-use crate::types::Address;
-use byteorder::{ByteOrder, LittleEndian};
 
 use super::source::varuint_encode_size;
 
@@ -34,21 +32,15 @@ impl Sink {
     }
 
     pub(crate) fn write_u16(&mut self, val: u16) {
-        let mut buf = [0; 2];
-        LittleEndian::write_u16(&mut buf, val);
-        self.write_bytes(&buf)
+        self.write_bytes(&val.to_le_bytes())
     }
 
     pub(crate) fn write_u32(&mut self, val: u32) {
-        let mut buf = [0; 4];
-        LittleEndian::write_u32(&mut buf, val);
-        self.write_bytes(&buf)
+        self.write_bytes(&val.to_le_bytes())
     }
 
     pub(crate) fn write_u64(&mut self, val: u64) {
-        let mut buf = [0; 8];
-        LittleEndian::write_u64(&mut buf, val);
-        self.write_bytes(&buf)
+        self.write_bytes(&val.to_le_bytes())
     }
 
     pub(crate) fn write_u128(&mut self, val: u128) {
