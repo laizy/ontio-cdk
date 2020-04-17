@@ -13,6 +13,7 @@ const TYPE_H256: u8 = 0x05;
 
 const TYPE_LIST: u8 = 0x10;
 ///Entity used to push events in a contract.
+#[must_use = "this `EventBuilder` should call notify to take effect"]
 pub struct EventBuilder {
     sink: Sink,
     num_entry: u32,
@@ -136,3 +137,13 @@ impl EventBuilder {
         runtime::notify(&buf);
     }
 }
+
+// compile-fails
+
+/// ```compile_fail
+/// #[deny(unused_must_use)]
+/// {
+///     EventBuilder::new().bool(true);
+/// }
+/// ```
+fn _event_builder_must_use() {}
